@@ -609,19 +609,27 @@
                         "name": "felix_gtp_inst/inst/gt_usrclk_source/txoutclk_mmcm0_i/gt1_txusrclk2_out",
                         "state_reg": [
                             {
-                                "name": "FullMode_box_single/FSM_sequential_control_state_reg[0]",
+                                "name": "COUNT_GEN/FSM_onehot_state_reg[1]",
                                 "states": [
                                     {
                                         "name": "iSTATE",
-                                        "val": "10"
+                                        "val": "10000"
                                     },
                                     {
                                         "name": "iSTATE0",
-                                        "val": "00"
+                                        "val": "01000"
                                     },
                                     {
                                         "name": "iSTATE1",
-                                        "val": "01"
+                                        "val": "00100"
+                                    },
+                                    {
+                                        "name": "iSTATE2",
+                                        "val": "00001"
+                                    },
+                                    {
+                                        "name": "iSTATE3",
+                                        "val": "00010"
                                     }
                                 ]
                             }
