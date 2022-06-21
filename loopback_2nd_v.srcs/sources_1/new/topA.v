@@ -97,12 +97,15 @@ module top(
     
     // FELIX 
     wire [31:0] daq_stream; // data to felix
+    wire [31:0] daq_stream2; // data to felix
     wire [3:0]  daq_stream_k; // K symbol flags to felix
+    wire [3:0]  daq_stream_k2; // K symbol flags to felix
     wire txusrclk;
     wire rxusrclk2;
     wire txrst;
     wire rxrst;
     wire [31:0] rxdata;
+    wire [31:0] rxdata2;
     
     wire [31:0] status_bits;
     wire [31:0] counter_DEBUG;
@@ -126,12 +129,48 @@ wire [5:0] selector_w;
 wire [1:0] d_type_read_c;
 wire [39:0] fifo_e_w;
 wire [39:0] fifo_re_w;
-wire [33:0] fifo_data0_w;
-wire [33:0] fifo_data1_w;
 wire [39:0] fifo_e_w_1;
 wire [39:0] fifo_re_w_1;
+wire [33:0] fifo_data0_w;
+wire [33:0] fifo_data1_w;
+wire [33:0] fifo_data2_w;
 wire [33:0] fifo_data3_w;
 wire [33:0] fifo_data4_w;
+wire [33:0] fifo_data5_w;
+wire [33:0] fifo_data6_w;
+wire [33:0] fifo_data7_w;
+wire [33:0] fifo_data8_w;
+wire [33:0] fifo_data9_w;
+wire [33:0] fifo_data10_w;
+wire [33:0] fifo_data11_w;
+wire [33:0] fifo_data12_w;
+wire [33:0] fifo_data13_w;
+wire [33:0] fifo_data14_w;
+wire [33:0] fifo_data15_w;
+wire [33:0] fifo_data16_w;
+wire [33:0] fifo_data17_w;
+wire [33:0] fifo_data18_w;
+wire [33:0] fifo_data19_w;
+wire [33:0] fifo_data20_w;
+wire [33:0] fifo_data21_w;
+wire [33:0] fifo_data22_w;
+wire [33:0] fifo_data23_w;
+wire [33:0] fifo_data24_w;
+wire [33:0] fifo_data25_w;
+wire [33:0] fifo_data26_w;
+wire [33:0] fifo_data27_w;
+wire [33:0] fifo_data28_w;
+wire [33:0] fifo_data29_w;
+wire [33:0] fifo_data30_w;
+wire [33:0] fifo_data31_w;
+wire [33:0] fifo_data32_w;
+wire [33:0] fifo_data33_w;
+wire [33:0] fifo_data34_w;
+wire [33:0] fifo_data35_w;
+wire [33:0] fifo_data36_w;
+wire [33:0] fifo_data37_w;
+wire [33:0] fifo_data38_w;
+wire [33:0] fifo_data39_w;
 
 Trigger_control Trigger_control(
     .we(we),
@@ -141,21 +180,62 @@ Trigger_control Trigger_control(
 	.sys_rst(!mmcm_locked)
 );
     
-    PRBS_DATA PRBS_DATA(
+COUNT_GEN COUNT_GEN(
 	.we(we), 
 	.d_out(data_prbs),
     .we_fifo(fifo_we),
     .sys_clk(txusrclk),
     .sys_rst(!mmcm_locked) 
 );
-FIFO34 FIFO34_3(
+FIFO34 FIFO34_0(
 	 .link_ready(status_bits[8]), //.link_ready(txinit)
-//    .link_ready(1'b1),
 	 .re(fifo_re_w_1[0]),
 	 .we(fifo_we),
 	 .reset(!mmcm_locked),
 	 .fifo_full(fifo_full),
 	 .fifo_empty(fifo_e_w_1[0]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data0_w[31:0]),
+	 .data_type(fifo_data0_w[33:32]),
+	 .data_in(data_prbs)
+);
+
+FIFO34 FIFO34_1(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[1]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[1]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data1_w[31:0]),
+	 .data_type(fifo_data1_w[33:32]),
+	 .data_in(data_prbs)
+);
+
+FIFO34 FIFO34_2(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[2]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[2]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data2_w[31:0]),
+	 .data_type(fifo_data2_w[33:32]),
+	 .data_in(data_prbs)
+);
+
+FIFO34 FIFO34_3(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[3]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[3]),
 	 .tx_clk(txusrclk),
 	 .write_clk(txusrclk),
 	 .tx_data(fifo_data3_w[31:0]),
@@ -165,7 +245,175 @@ FIFO34 FIFO34_3(
 
 FIFO34 FIFO34_4(
 	 .link_ready(status_bits[8]), //.link_ready(txinit)
-//    .link_ready(1'b1),
+	 .re(fifo_re_w_1[4]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[4]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data4_w[31:0]),
+	 .data_type(fifo_data4_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_5(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[5]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[5]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data5_w[31:0]),
+	 .data_type(fifo_data5_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_6(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[6]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[6]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data6_w[31:0]),
+	 .data_type(fifo_data6_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_7(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[7]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[7]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data7_w[31:0]),
+	 .data_type(fifo_data7_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_8(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[8]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[8]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data8_w[31:0]),
+	 .data_type(fifo_data8_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_9(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[9]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[9]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data9_w[31:0]),
+	 .data_type(fifo_data9_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_10(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[10]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[10]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data10_w[31:0]),
+	 .data_type(fifo_data10_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_11(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[11]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[11]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data11_w[31:0]),
+	 .data_type(fifo_data11_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_12(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[12]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[12]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data12_w[31:0]),
+	 .data_type(fifo_data12_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_13(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[13]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[13]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data13_w[31:0]),
+	 .data_type(fifo_data13_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_14(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[14]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[14]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data14_w[31:0]),
+	 .data_type(fifo_data14_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_15(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[15]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[15]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data15_w[31:0]),
+	 .data_type(fifo_data15_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_16(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[16]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[16]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data16_w[31:0]),
+	 .data_type(fifo_data16_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_17(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
 	 .re(fifo_re_w_1[17]),
 	 .we(fifo_we),
 	 .reset(!mmcm_locked),
@@ -173,58 +421,380 @@ FIFO34 FIFO34_4(
 	 .fifo_empty(fifo_e_w_1[17]),
 	 .tx_clk(txusrclk),
 	 .write_clk(txusrclk),
-	 .tx_data(fifo_data4_w[31:0]),
-	 .data_type(fifo_data4_w[33:32]),
+	 .tx_data(fifo_data17_w[31:0]),
+	 .data_type(fifo_data17_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_18(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[18]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[18]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data18_w[31:0]),
+	 .data_type(fifo_data18_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_19(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[19]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[19]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data19_w[31:0]),
+	 .data_type(fifo_data19_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_20(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[20]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[20]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data20_w[31:0]),
+	 .data_type(fifo_data20_w[33:32]),
 	 .data_in(data_prbs)
 );
 
+FIFO34 FIFO34_21(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[21]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[21]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data21_w[31:0]),
+	 .data_type(fifo_data21_w[33:32]),
+	 .data_in(data_prbs)
+);
 
-assign fifo_e_w_1[39:18] = 22'b1111111111111111111111;
-assign fifo_e_w_1[16:1] = 16'b1111111111111111;
-assign fifo_re_w_1[39:18] = 22'b0;
-assign fifo_re_w_1[16:1] = 16'b0;
+FIFO34 FIFO34_22(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[22]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[22]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data22_w[31:0]),
+	 .data_type(fifo_data22_w[33:32]),
+	 .data_in(data_prbs)
+);
+
+FIFO34 FIFO34_23(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[23]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[23]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data23_w[31:0]),
+	 .data_type(fifo_data23_w[33:32]),
+	 .data_in(data_prbs)
+);
+
+FIFO34 FIFO34_24(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[24]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[24]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data24_w[31:0]),
+	 .data_type(fifo_data24_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_25(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[25]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[25]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data25_w[31:0]),
+	 .data_type(fifo_data25_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_26(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[26]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[26]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data26_w[31:0]),
+	 .data_type(fifo_data26_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_27(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[27]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[27]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data27_w[31:0]),
+	 .data_type(fifo_data27_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_28(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[28]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[28]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data28_w[31:0]),
+	 .data_type(fifo_data28_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_29(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[29]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[29]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data29_w[31:0]),
+	 .data_type(fifo_data29_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_30(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[30]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[30]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data30_w[31:0]),
+	 .data_type(fifo_data30_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_31(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[31]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[31]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data31_w[31:0]),
+	 .data_type(fifo_data31_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_32(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[32]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[32]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data32_w[31:0]),
+	 .data_type(fifo_data32_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_33(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[33]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[33]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data33_w[31:0]),
+	 .data_type(fifo_data33_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_34(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[34]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[34]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data34_w[31:0]),
+	 .data_type(fifo_data34_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_35(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[35]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[35]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data35_w[31:0]),
+	 .data_type(fifo_data35_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_36(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[36]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[36]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data36_w[31:0]),
+	 .data_type(fifo_data36_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_37(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[37]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[37]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data37_w[31:0]),
+	 .data_type(fifo_data37_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_38(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[38]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[38]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data38_w[31:0]),
+	 .data_type(fifo_data38_w[33:32]),
+	 .data_in(data_prbs)
+);
+FIFO34 FIFO34_39(
+	 .link_ready(status_bits[8]), //.link_ready(txinit)
+	 .re(fifo_re_w_1[39]),
+	 .we(fifo_we),
+	 .reset(!mmcm_locked),
+	 .fifo_full(fifo_full),
+	 .fifo_empty(fifo_e_w_1[39]),
+	 .tx_clk(txusrclk),
+	 .write_clk(txusrclk),
+	 .tx_data(fifo_data39_w[31:0]),
+	 .data_type(fifo_data39_w[33:32]),
+	 .data_in(data_prbs)
+);
+
+//***********------------------*****************************************
+//FIFO34 FIFO34_3(
+//	 .link_ready(status_bits[8]), //.link_ready(txinit)
+////    .link_ready(1'b1),
+//	 .re(fifo_re_w_1[0]),
+//	 .we(fifo_we),
+//	 .reset(!mmcm_locked),
+//	 .fifo_full(fifo_full),
+//	 .fifo_empty(fifo_e_w_1[0]),
+//	 .tx_clk(txusrclk),
+//	 .write_clk(txusrclk),
+//	 .tx_data(fifo_data3_w[31:0]),
+//	 .data_type(fifo_data3_w[33:32]),
+//	 .data_in(data_prbs)
+//);
+
+//FIFO34 FIFO34_4(
+//	 .link_ready(status_bits[8]), //.link_ready(txinit)
+////    .link_ready(1'b1),
+//	 .re(fifo_re_w_1[20]),
+//	 .we(fifo_we),
+//	 .reset(!mmcm_locked),
+//	 .fifo_full(fifo_full),
+//	 .fifo_empty(fifo_e_w_1[20]),
+//	 .tx_clk(txusrclk),
+//	 .write_clk(txusrclk),
+//	 .tx_data(fifo_data4_w[31:0]),
+//	 .data_type(fifo_data4_w[33:32]),
+//	 .data_in(data_prbs)
+//);
+
+
+//assign fifo_e_w_1[39:21] = 19'b1111111111111111111;
+//assign fifo_e_w_1[19:1] = 19'b1111111111111111111;
+//assign fifo_re_w_1[39:21] = 19'b0;
+//assign fifo_re_w_1[19:1] = 19'b0;
+//**************************----------------------------**************************
 
 FullMode_box_single FullMode_box_single(
-	.data_FIFO_0(fifo_data3_w),
-	.data_FIFO_1(34'b0),
-	.data_FIFO_2(34'b0),
-	.data_FIFO_3(34'b0),
-	.data_FIFO_4(34'b0),
-	.data_FIFO_5(34'b0),
-	.data_FIFO_6(34'b0),
-	.data_FIFO_7(34'b0),
-	.data_FIFO_8(34'b0),
-	.data_FIFO_9(34'b0),
-	.data_FIFO_10(34'b0),
-	.data_FIFO_11(34'b0),
-	.data_FIFO_12(34'b0),
-	.data_FIFO_13(34'b0),
-	.data_FIFO_14(34'b0),
-	.data_FIFO_15(34'b0),
-	.data_FIFO_16(34'b0),
-	.data_FIFO_17(fifo_data4_w),
-	.data_FIFO_18(34'b0),
-	.data_FIFO_19(34'b0),
-	.data_FIFO_20(34'b0),
-	.data_FIFO_21(34'b0),
-	.data_FIFO_22(34'b0),
-	.data_FIFO_23(34'b0),
-	.data_FIFO_24(34'b0),
-	.data_FIFO_25(34'b0),
-	.data_FIFO_26(34'b0),
-	.data_FIFO_27(34'b0),
-	.data_FIFO_28(34'b0),
-	.data_FIFO_29(34'b0),
-	.data_FIFO_30(34'b0),
-	.data_FIFO_31(34'b0),
-	.data_FIFO_32(34'b0),
-	.data_FIFO_33(34'b0),
-	.data_FIFO_34(34'b0),
-	.data_FIFO_35(34'b0),
-	.data_FIFO_36(34'b0),
-	.data_FIFO_37(34'b0),
-	.data_FIFO_38(34'b0),
-	.data_FIFO_39(34'b0),
+	.data_FIFO_0(fifo_data0_w),
+	.data_FIFO_1(fifo_data1_w),
+	.data_FIFO_2(fifo_data2_w),
+	.data_FIFO_3(fifo_data3_w),
+	.data_FIFO_4(fifo_data4_w),
+	.data_FIFO_5(fifo_data5_w),
+	.data_FIFO_6(fifo_data6_w),
+	.data_FIFO_7(fifo_data7_w),
+	.data_FIFO_8(fifo_data8_w),
+	.data_FIFO_9(fifo_data9_w),
+	.data_FIFO_10(fifo_data10_w),
+	.data_FIFO_11(fifo_data11_w),
+	.data_FIFO_12(fifo_data12_w),
+	.data_FIFO_13(fifo_data13_w),
+	.data_FIFO_14(fifo_data14_w),
+	.data_FIFO_15(fifo_data15_w),
+	.data_FIFO_16(fifo_data16_w),
+	.data_FIFO_17(fifo_data17_w),
+	.data_FIFO_18(fifo_data18_w),
+	.data_FIFO_19(fifo_data19_w),
+	.data_FIFO_20(fifo_data20_w),
+	.data_FIFO_21(fifo_data21_w),
+	.data_FIFO_22(fifo_data22_w),
+	.data_FIFO_23(fifo_data23_w),
+	.data_FIFO_24(fifo_data24_w),
+	.data_FIFO_25(fifo_data25_w),
+	.data_FIFO_26(fifo_data26_w),
+	.data_FIFO_27(fifo_data27_w),
+	.data_FIFO_28(fifo_data28_w),
+	.data_FIFO_29(fifo_data29_w),
+	.data_FIFO_30(fifo_data30_w),
+	.data_FIFO_31(fifo_data31_w),
+	.data_FIFO_32(fifo_data32_w),
+	.data_FIFO_33(fifo_data33_w),
+	.data_FIFO_34(fifo_data34_w),
+	.data_FIFO_35(fifo_data35_w),
+	.data_FIFO_36(fifo_data36_w),
+	.data_FIFO_37(fifo_data37_w),
+	.data_FIFO_38(fifo_data38_w),
+	.data_FIFO_39(fifo_data39_w),
 	.FIFO_empty_IN(fifo_e_w_1),
 	.data_to_GTP(daq_stream),
 	.k_o(daq_stream_k[0]),
@@ -236,7 +806,60 @@ FullMode_box_single FullMode_box_single(
 	.sys_rst(!mmcm_locked)
 );
 
-assign daq_stream_k[3:1] = 3'b0; 
+//FullMode_box_dual FullMode_box_dual(
+//	.data_FIFO_0(fifo_data0_w),
+//	.data_FIFO_1(fifo_data1_w),
+//.data_FIFO_2(fifo_data2_w),
+//	.data_FIFO_3(fifo_data3_w),
+//	.data_FIFO_4(fifo_data4_w),
+//	.data_FIFO_5(fifo_data5_w),
+//	.data_FIFO_6(fifo_data6_w),
+//	.data_FIFO_7(fifo_data7_w),
+//	.data_FIFO_8(fifo_data8_w),
+//	.data_FIFO_9(fifo_data9_w),
+//	.data_FIFO_10(fifo_data10_w),
+//	.data_FIFO_11(fifo_data11_w),
+//	.data_FIFO_12(fifo_data12_w),
+//	.data_FIFO_13(fifo_data13_w),
+//	.data_FIFO_14(fifo_data14_w),
+//	.data_FIFO_15(fifo_data15_w),
+//	.data_FIFO_16(fifo_data16_w),
+//	.data_FIFO_17(fifo_data17_w),
+//	.data_FIFO_18(fifo_data18_w),
+//	.data_FIFO_19(fifo_data19_w),
+//	.data_FIFO_20(fifo_data20_w),
+//	.data_FIFO_21(fifo_data21_w),
+//	.data_FIFO_22(fifo_data22_w),
+//	.data_FIFO_23(fifo_data23_w),
+//	.data_FIFO_24(fifo_data24_w),
+//	.data_FIFO_25(fifo_data25_w),
+//	.data_FIFO_26(fifo_data26_w),
+//	.data_FIFO_27(fifo_data27_w),
+//	.data_FIFO_28(fifo_data28_w),
+//	.data_FIFO_29(fifo_data29_w),
+//	.data_FIFO_30(fifo_data30_w),
+//	.data_FIFO_31(fifo_data31_w),
+//	.data_FIFO_32(fifo_data32_w),
+//	.data_FIFO_33(fifo_data33_w),
+//	.data_FIFO_34(fifo_data34_w),
+//	.data_FIFO_35(fifo_data35_w),
+//	.data_FIFO_36(fifo_data36_w),
+//	.data_FIFO_37(fifo_data37_w),
+//	.data_FIFO_38(fifo_data38_w),
+//	.data_FIFO_39(fifo_data39_w),
+//	.FIFO_empty_IN(fifo_e_w_1),
+//	.data_to_GTP_0(daq_stream),
+//	.k_o_0(daq_stream_k[0]),
+//	.data_to_GTP_1(daq_stream2),
+//	.k_o_1(daq_stream_k2[0]),
+//	.link_ready(status_bits[8]),
+//	.FIFO_re_OUT(fifo_re_w_1),
+//	.sys_clk(txusrclk),
+//	.sys_rst(!mmcm_locked)
+//);
+assign daq_stream_k[3:1] = 3'b0;
+assign daq_stream_k2[3:1] = 3'b0;
+ 
 
     felix_gtp0 felix_gtp_inst 
     (
@@ -280,7 +903,7 @@ assign daq_stream_k[3:1] = 3'b0;
         .gt0_rxlpmlfhold_in             (1'b0),
         .gt0_rxmcommaalignen_in         (1'b1),
         .gt0_rxpcommaalignen_in         (1'b1),
-        //.gt0_rxdata_out                 (),
+        .gt0_rxdata_out                 (rxdata2),
         //.gt0_rx_mmcm_lock_out           (),
         //.gt0_rx_fsm_reset_done_out      (),
         //.gt0_rxusrclk_out               (),
@@ -354,7 +977,9 @@ assign daq_stream_k[3:1] = 3'b0;
         .probe6    (rxdata), // 32-bit wide
         .probe7    (daq_stream), // 32-bit wide
         .probe8    (clk_120),
-        .probe9    (clk100_fpga_pad2)
+        .probe9    (clk100_fpga_pad2),
+        .probe10    (rxdata2), // 32-bit wide
+        .probe11    (daq_stream2) // 32-bit wide
     );
     
     vio_0 vio_ep (
